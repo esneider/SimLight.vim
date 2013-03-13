@@ -4,9 +4,9 @@
 
 
 let s:prefix_rules = {
-    'Member': '.',
-    'PointerMember': '->',
-}
+\    'Member': '.',
+\    'PointerMember': '->',
+\}
 
 
 if exists('g:simlight_prefix_rules')
@@ -14,11 +14,11 @@ if exists('g:simlight_prefix_rules')
 endif
 
 
-let s:postfix_rules = [
-    'Function': '(',
-    'Namespace': '::',
-    'Array': '[',
-]
+let s:postfix_rules = {
+\    'Function': '(',
+\    'Namespace': '::',
+\    'Array': '[',
+\}
 
 
 if exists('g:simlight_postfix_rules')
@@ -26,16 +26,16 @@ if exists('g:simlight_postfix_rules')
 endif
 
 
-let s:highlight_aliases = {
-    'Function':     ['CTagsFunction', 'Function']],
-    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type']],
-    'Array':        ['Identifier']],
-    'Member':       ['CTagsMember', 'Identifier']],
-    'PoiterMember': ['CTagsMember', 'Identifier']],
-}
+let s:highlight_groups = {
+\    'Function':     ['CTagsFunction', 'Function'],
+\    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+\    'Array':        ['Identifier'],
+\    'Member':       ['CTagsMember', 'Identifier'],
+\    'PoiterMember': ['CTagsMember', 'Identifier'],
+\}
 
 
-if exists('g:simlight_highlight_aliases')
+if exists('g:simlight_highlight_groups')
     for item in items(g:simlight_highlight_groups)
         if has_key(s:highlight_groups, item[0])
             item[1] += s:highlight_groups[item[0]]
@@ -46,16 +46,16 @@ endif
 
 
 let s:file_rules = {
-    'c':          ['Function', 'Namespace'],
-    'cpp':        ['Function', 'Namespace'],
-    'javascript': ['Function'],
-    'csharp':     ['Function'],
-    'java':       ['Function'],
-    'python':     ['Function'],
-    'octave':     ['Function'],
-    'php':        ['Function'],
-    'vim':        ['Function'],
-}
+\    'c':          ['Function', 'Namespace'],
+\    'cpp':        ['Function', 'Namespace'],
+\    'javascript': ['Function'],
+\    'csharp':     ['Function'],
+\    'java':       ['Function'],
+\    'python':     ['Function'],
+\    'octave':     ['Function'],
+\    'php':        ['Function'],
+\    'vim':        ['Function'],
+\}
 
 
 if exists('g:simlight_file_rules')
@@ -70,12 +70,12 @@ endif
 
 " Based on http://stackoverflow.com/a/773392/530680
 function! s:matchPrefix(name, prefix)
-    execute 'syntax match '.name.' "'.prefix.'\s*\zs\w\+"'
+    execute 'syntax match SL'.a:name.' "'.a:prefix.'\s*\zs\w\+"'
 endfunction
 
 
 function! s:matchPostfix(name, postfix)
-    execute 'syntax match '.name.' "\w\+\ze\s*'.postfix.'"'
+    execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'
 endfunction
 
 
@@ -98,7 +98,7 @@ endfunction
 function! s:highlightMatch(match, hlgroups)
     for hlgroup in a:hlgroups
         if s:hlexists(hlgroup)
-            execute 'highlight def link SH'.a:match.' '.hlgroup
+            execute 'highlight def link SL'.a:match.' '.hlgroup
             return
         endif
     endfor
@@ -108,14 +108,14 @@ endfunction
 function! s:highlight(rules)
     for rule in a:rules
         if has_key(s:prefix_rules, rule)
-            s:matchPrefix(rule, s:prefix_rules[rule])
+            call s:matchPrefix(rule, s:prefix_rules[rule])
         elseif has_key(s:postfix_rules, rule)
-            s:matchPostfix(rule, s:postfix_rules[rule])
+            call s:matchPostfix(rule, s:postfix_rules[rule])
         else
             continue
         endif
         if has_key(s:highlight_groups, rule)
-            s:highlightMatch(rule, s:highlight_groups[rule])
+            call s:highlightMatch(rule, s:highlight_groups[rule])
         endif
     endfor
 endfunction
@@ -127,11 +127,11 @@ endfunction
 
 
 function! s:simlight()
-    for rule in s:file_rules
-        execute 'autocmd Syntax '.join(rule[0], ',').' call s:highlight(["'.join(rule[1], '","').'"])'
+    for rule in items(s:file_rules)
+        execute 'autocmd Syntax '.rule[0].' call s:highlight(["'.join(rule[1], '","').'"])'
     endfor
 endfunction
 
 
-s:simlight()
+call s:simlight()
 
