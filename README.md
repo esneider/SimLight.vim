@@ -7,16 +7,17 @@ namespaces, memers and such.
 
 Options
 -------
-Fully configure and extend the plugin within its reach. For a more sophisticated
-syntax highlighting scheme, you should consider a ctags based plugin, such as
+Options provided to fully configure and extend the plugin within its reach. For
+a more sophisticated syntax highlighting scheme, you should consider a ctags
+based plugin, such as
 [vimscript #2646](http://www.vim.org/scripts/script.php?script_id=2646).
 
 ### The `g:simlight_prefix_rules` option
 
 A dictionary with extra prefix rules. The prefix rule key should be its name,
-and the value should be a string with the prefix (or matching regex).
+and the value should be a string with the prefix (a vim regex, actually).
 
-Default:
+**Default:**
 ```
 {
     'Member': '.',
@@ -29,7 +30,7 @@ Default:
 This option behaves exactly like `g:simlight_prefix_rules` but matches postfixes
 instead of prefixes.
 
-Default:
+**Default:**
 ```
 {
     'Function': '(',
@@ -40,14 +41,14 @@ Default:
 
 ### The `g:simlight_highlight_groups` option
 
-A dictionary with extra highlight groups for rules. A key should be a rule name,
+A dictionary with extra highlight groups for rules. An entry's key should be a rule name,
 and its value a list of highlight groups.
 
-Notes:
-* Only the first existing group will be used.
+**Notes:**
+* For each rule, only the first existing group will be used.
 * The provided groups will be checked before the default ones.
 
-Default:
+**Default:**
 ```
 {
     'Function':     ['CTagsFunction', 'Function']],
@@ -60,12 +61,12 @@ Default:
 
 ### The `g:simlight_file_rules` option
 
-A dictionary with the rules for each file type. A key should be a file type, and
+A dictionary with the rules for each file type. An entry's key should be a file type, and
 its value a list of rule names to apply.
 
-You can add new file types, or override existing ones by setting this option.
+By using this option, you can add new file types, or override existing ones.
 
-Default:
+**Default:**
 ```
 {
     'c':          ['Function', 'Namespace'],
@@ -79,4 +80,3 @@ Default:
     'vim':        ['Function'],
 }
 ```
-
