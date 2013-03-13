@@ -51,11 +51,11 @@ and its value a list of highlight groups.
 **Default:**
 ```
 {
-    'Function':     ['CTagsFunction', 'Function']],
-    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type']],
-    'Array':        ['Identifier']],
-    'Member':       ['CTagsMember', 'Identifier']],
-    'PoiterMember': ['CTagsMember', 'Identifier']],
+    'Function':     ['CTagsFunction', 'Function'],
+    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+    'Array':        ['Identifier'],
+    'Member':       ['CTagsMember', 'Identifier'],
+    'PoiterMember': ['CTagsMember', 'Identifier'],
 }
 ```
 
