@@ -44,8 +44,8 @@ A dictionary with extra highlight groups for rules. A key should be a rule name,
 and its value a list of highlight groups.
 
 Notes:
-    * Only the first existing group will be used.
-    * The provided groups will be checked before the default ones.
+* Only the first existing group will be used.
+* The provided groups will be checked before the default ones.
 
 Default:
 ```
