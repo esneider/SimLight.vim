@@ -20,9 +20,9 @@ and the value should be a string with the prefix (a vim regex, actually).
 **Default:**
 ```
 {
-    'Member': '.',
-    'PointerMember': '->',
-}
+\    'Member': '.',
+\    'PointerMember': '->',
+\}
 ```
 
 ### The `g:simlight_postfix_rules` option
@@ -33,10 +33,10 @@ instead of prefixes.
 **Default:**
 ```
 {
-    'Function': '(',
-    'Namespace': '::',
-    'Array': '[',
-}
+\    'Function': '(',
+\    'Namespace': '::',
+\    'Array': '[',
+\}
 ```
 
 ### The `g:simlight_highlight_groups` option
@@ -51,12 +51,12 @@ and its value a list of highlight groups.
 **Default:**
 ```
 {
-    'Function':     ['CTagsFunction', 'Function'],
-    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
-    'Array':        ['Identifier'],
-    'Member':       ['CTagsMember', 'Identifier'],
-    'PoiterMember': ['CTagsMember', 'Identifier'],
-}
+\    'Function':     ['CTagsFunction', 'Function'],
+\    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+\    'Array':        ['Identifier'],
+\    'Member':       ['CTagsMember', 'Identifier'],
+\    'PoiterMember': ['CTagsMember', 'Identifier'],
+\}
 ```
 
 ### The `g:simlight_file_rules` option
@@ -69,14 +69,14 @@ By using this option, you can add new file types, or override existing ones.
 **Default:**
 ```
 {
-    'c':          ['Function', 'Namespace'],
-    'cpp':        ['Function', 'Namespace'],
-    'javascript': ['Function'],
-    'csharp':     ['Function'],
-    'java':       ['Function'],
-    'python':     ['Function'],
-    'octave':     ['Function'],
-    'php':        ['Function'],
-    'vim':        ['Function'],
-}
+\    'c':          ['Function', 'Namespace'],
+\    'cpp':        ['Function', 'Namespace'],
+\    'javascript': ['Function'],
+\    'csharp':     ['Function'],
+\    'java':       ['Function'],
+\    'python':     ['Function'],
+\    'octave':     ['Function'],
+\    'php':        ['Function'],
+\    'vim':        ['Function'],
+\}
 ```
