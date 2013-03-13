@@ -38,7 +38,7 @@ let s:highlight_groups = {
 if exists('g:simlight_highlight_groups')
     for item in items(g:simlight_highlight_groups)
         if has_key(s:highlight_groups, item[0])
-            item[1] += s:highlight_groups[item[0]]
+            let item[1] += s:highlight_groups[item[0]]
         endif
         s:highlight_groups[item[0]] = item[1]
     endfor
