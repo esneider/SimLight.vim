@@ -1,4 +1,4 @@
-SimLight.vim
+simlight.vim
 ============
 
 Vim plugin for simple, extensible highlighting (by regex matching) of functions,
