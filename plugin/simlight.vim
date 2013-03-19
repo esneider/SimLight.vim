@@ -76,7 +76,6 @@ endfunction
 
 function! s:matchPostfix(name, postfix)
     execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'
-    "containedin=javaParenT,javaParenT1,javaParenT2'
 endfunction
 
 

@@ -7,6 +7,7 @@ namespaces, memers and such.
 
 Options
 -------
+
 Options provided to fully configure and extend the plugin within its reach. For
 a more sophisticated syntax highlighting scheme, you should consider a ctags
 based plugin, such as
@@ -51,11 +52,11 @@ and its value a list of highlight groups.
 **Default:**
 ```
 {
-\    'Function':     ['CTagsFunction', 'Function'],
-\    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
-\    'Array':        ['Identifier'],
-\    'Member':       ['CTagsMember', 'Identifier'],
-\    'PoiterMember': ['CTagsMember', 'Identifier'],
+\    'Function':     ['SLFunction', 'CTagsFunction', 'Function'],
+\    'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+\    'Array':        ['SLArray', 'Identifier'],
+\    'Member':       ['SLMember', 'CTagsMember', 'Identifier'],
+\    'PoiterMember': ['SLPointerMember', 'SLMember', 'CTagsMember', 'Identifier'],
 \}
 ```
 
@@ -75,7 +76,7 @@ By using this option, you can add new file types, or override existing ones.
 \    'csharp':     ['Function'],
 \    'java':       ['Function'],
 \    'python':     ['Function'],
-\    'octave':     ['Function'],
+\    'matlab':     ['Function'],
 \    'php':        ['Function'],
 \    'vim':        ['Function'],
 \}
