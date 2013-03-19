@@ -27,11 +27,11 @@ endif
 
 
 let s:highlight_groups = {
-\    'Function':     ['CTagsFunction', 'Function'],
-\    'Namespace':    ['CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
-\    'Array':        ['Identifier'],
-\    'Member':       ['CTagsMember', 'Identifier'],
-\    'PoiterMember': ['CTagsMember', 'Identifier'],
+\    'Function':     ['SLFunction', 'CTagsFunction', 'Function'],
+\    'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+\    'Array':        ['SLArray', 'Identifier'],
+\    'Member':       ['SLMember', 'CTagsMember', 'Identifier'],
+\    'PoiterMember': ['SLPointerMember', 'SLMember', 'CTagsMember', 'Identifier'],
 \}
 
 
@@ -52,7 +52,7 @@ let s:file_rules = {
 \    'csharp':     ['Function'],
 \    'java':       ['Function'],
 \    'python':     ['Function'],
-\    'octave':     ['Function'],
+\    'matlab':     ['Function'],
 \    'php':        ['Function'],
 \    'vim':        ['Function'],
 \}
@@ -76,6 +76,7 @@ endfunction
 
 function! s:matchPostfix(name, postfix)
     execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'
+    "containedin=javaParenT,javaParenT1,javaParenT2'
 endfunction
 
 
