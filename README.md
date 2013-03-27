@@ -10,9 +10,9 @@ groups for functions or namespaces, you should define them in your vimrc.
 
 For example:
 
-```
-hi SLFunction  guifg=#afdfdf guibg=#2a2b2f gui=bold ctermfg=152 ctermbg=235 cterm=none
-hi SLNamespace guifg=#a8a8a8 guibg=#2a2b2f gui=none ctermfg=248 ctermbg=235 cterm=none
+```vim
+hi SLFunction  guifg=#afdfdf guibg=#2a2b2f ctermfg=152 ctermbg=235
+hi SLNamespace guifg=#a8a8a8 guibg=#2a2b2f ctermfg=248 ctermbg=235
 ```
 
 Options
@@ -29,11 +29,9 @@ A dictionary with extra prefix rules. The prefix rule key should be its name,
 and the value should be a string with the prefix (a vim regex, actually).
 
 **Default:**
-```
-{
-\    'Member': '.',
-\    'PointerMember': '->',
-\}
+```vim
+'Member': '.'
+'PointerMember': '->'
 ```
 
 ### The `g:simlight_postfix_rules` option
@@ -42,12 +40,10 @@ This option behaves exactly like `g:simlight_prefix_rules` but matches postfixes
 instead of prefixes.
 
 **Default:**
-```
-{
-\    'Function': '(',
-\    'Namespace': '::',
-\    'Array': '[',
-\}
+```vim
+'Function': '('
+'Namespace': '::'
+'Array': '['
 ```
 
 ### The `g:simlight_highlight_groups` option
@@ -60,14 +56,12 @@ rule name, and its value a list of highlight groups.
 * The provided groups will be checked before the default ones.
 
 **Default:**
-```
-{
-\    'Function':     ['SLFunction', 'CTagsFunction', 'Function'],
-\    'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
-\    'Array':        ['SLArray', 'Identifier'],
-\    'Member':       ['SLMember', 'CTagsMember', 'Identifier'],
-\    'PoiterMember': ['SLPointerMember', 'SLMember', 'CTagsMember', 'Identifier'],
-\}
+```vim
+'Function':     ['SLFunction', 'CTagsFunction', 'Function']
+'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type']
+'Array':        ['SLArray', 'Identifier']
+'Member':       ['SLMember', 'CTagsMember', 'Identifier']
+'PoiterMember': ['SLPointerMember', 'SLMember', 'CTagsMember', 'Identifier']
 ```
 
 ### The `g:simlight_file_rules` option
@@ -78,18 +72,16 @@ type, and its value a list of rule names to apply.
 By using this option, you can add new file types, or override existing ones.
 
 **Default:**
-```
-{
-\    'c':          ['Function', 'Namespace'],
-\    'cpp':        ['Function', 'Namespace'],
-\    'javascript': ['Function'],
-\    'csharp':     ['Function'],
-\    'java':       ['Function'],
-\    'python':     ['Function'],
-\    'matlab':     ['Function'],
-\    'php':        ['Function'],
-\    'vim':        ['Function'],
-\}
+```vim
+'c':          ['Function', 'Namespace']
+'cpp':        ['Function', 'Namespace']
+'javascript': ['Function']
+'csharp':     ['Function']
+'java':       ['Function']
+'python':     ['Function']
+'matlab':     ['Function']
+'php':        ['Function']
+'vim':        ['Function']
 ```
 
 ### The `g:simlight_file_contained_in` option
@@ -101,10 +93,8 @@ Some syntax files are ill-defined, or already match some of the same patterns, s
 option is provided to fix these cases.
 
 **Default**
-```
-{
-\   'java':   ['javaParenT', 'javaParenT1', 'javaParentT2'],
-\   'python': ['pythonFunction'],
-\   'vim':    ['vimFuncBody', 'vimFunction', 'vimUserFunc', 'vimExecute'],
-\}
+```vim
+'java':   ['javaParenT', 'javaParenT1', 'javaParentT2']
+'python': ['pythonFunction']
+'vim':    ['vimFuncBody', 'vimFunction', 'vimUserFunc', 'vimExecute']
 ```
