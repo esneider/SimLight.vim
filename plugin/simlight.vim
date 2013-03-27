@@ -63,19 +63,31 @@ if exists('g:simlight_file_rules')
 endif
 
 
+let s:file_contained_in = {
+\   'java':   ['javaParenT', 'javaParenT1', 'javaParentT2'],
+\   'python': ['pythonFunction'],
+\   'vim':    ['vimFuncBody', 'vimFunction', 'vimUserFunc', 'vimExecute'],
+\}
+
+
+if exists('g:simlight_file_contained_in')
+    extend(s:file_contained_in, g:simlight_file_contained_in)
+endif
+
+
 """"""""""""""""""""""""
 " Simple syntax matching
 """"""""""""""""""""""""
 
 
 " Based on http://stackoverflow.com/a/773392/530680
-function! s:matchPrefix(name, prefix)
-    execute 'syntax match SL'.a:name.' "'.a:prefix.'\s*\zs\w\+"'
+function! s:matchPrefix(name, prefix, contained_in)
+    execute 'syntax match SL'.a:name.' "'.a:prefix.'\s*\zs\w\+"'.a:contained_in
 endfunction
 
 
-function! s:matchPostfix(name, postfix)
-    execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'
+function! s:matchPostfix(name, postfix, contained_in)
+    execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'.a:contained_in
 endfunction
 
 
@@ -98,19 +110,19 @@ endfunction
 function! s:highlightMatch(match, hlgroups)
     for hlgroup in a:hlgroups
         if s:hlexists(hlgroup)
-            execute 'highlight def link SL'.a:match.' '.hlgroup
+            execute 'highlight default link SL'.a:match.' '.hlgroup
             return
         endif
     endfor
 endfunction
 
 
-function! s:highlight(rules)
+function! s:highlight(rules, contained_in)
     for rule in a:rules
         if has_key(s:prefix_rules, rule)
-            call s:matchPrefix(rule, s:prefix_rules[rule])
+            call s:matchPrefix(rule, s:prefix_rules[rule], a:contained_in)
         elseif has_key(s:postfix_rules, rule)
-            call s:matchPostfix(rule, s:postfix_rules[rule])
+            call s:matchPostfix(rule, s:postfix_rules[rule], a:contained_in)
         else
             continue
         endif
@@ -128,7 +140,11 @@ endfunction
 
 function! s:simlight()
     for rule in items(s:file_rules)
-        execute 'autocmd Syntax '.rule[0].' call s:highlight(["'.join(rule[1], '","').'"])'
+        let contained_in = ''
+        if has_key(s:file_contained_in, rule[0])
+            let contained_in = ' containedin='.join(s:file_contained_in[rule[0]],',')
+        endif
+        execute 'autocmd Syntax '.rule[0].' call s:highlight(["'.join(rule[1], '","').'"], "'.contained_in.'")'
     endfor
 endfunction
 
