@@ -92,7 +92,7 @@ should be a file type, and its value a list of syntax groups.
 Some syntax files are ill-defined, or already match some of the same patterns, so this
 option is provided to fix these cases.
 
-**Default**
+**Default:**
 ```vim
 'java':   ['javaParenT', 'javaParenT1', 'javaParentT2']
 'python': ['pythonFunction']
