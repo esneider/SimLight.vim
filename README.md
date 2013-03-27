@@ -2,7 +2,7 @@ simlight.vim
 ============
 
 Vim plugin for simple, extensible highlighting (by regex matching) of functions,
-namespaces, memers and such.
+namespaces, members and such.
 
 It provides functions (and namespaces for C++) highlighting for several
 languages out of the box. If your color scheme doesn't define the highlighting
@@ -89,8 +89,8 @@ By using this option, you can add new file types, or override existing ones.
 A dictionary with the `containedin` groups for each file type. An entry's key
 should be a file type, and its value a list of syntax groups.
 
-Some syntax files are ill-defined, or already match some of the same patterns, so this
-option is provided to fix these cases.
+Some syntax files are ill-defined, or already match some of the same patterns,
+so this option is provided to fix these cases.
 
 **Default:**
 ```vim
