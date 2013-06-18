@@ -73,7 +73,7 @@ By using this option, you can add new file types, or override existing ones.
 
 **Default:**
 ```vim
-'c':          ['Function', 'Namespace']
+'c':          ['Function']
 'cpp':        ['Function', 'Namespace']
 'javascript': ['Function']
 'csharp':     ['Function']

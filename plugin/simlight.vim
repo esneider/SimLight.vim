@@ -46,7 +46,7 @@ endif
 
 
 let s:file_rules = {
-\    'c':          ['Function', 'Namespace'],
+\    'c':          ['Function'],
 \    'cpp':        ['Function', 'Namespace'],
 \    'javascript': ['Function'],
 \    'csharp':     ['Function'],
@@ -94,6 +94,7 @@ endfunction
 """""""""""""""""""""
 " Syntax highlighting
 """""""""""""""""""""
+
 
 " See: https://groups.google.com/d/msg/vim_use/8r5_jx_tnnM/LzM29RQT-88J
 function! s:hlexists(hlgroup)
