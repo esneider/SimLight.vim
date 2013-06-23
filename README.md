@@ -4,15 +4,15 @@ simlight.vim
 Vim plugin for simple, extensible highlighting (by regex matching) of functions,
 namespaces, members and such.
 
-It provides functions (and namespaces for C++) highlighting for several
+It provides function (and namespace for C++) highlighting for several
 languages out of the box. If your color scheme doesn't define the highlighting
-groups for functions or namespaces, you should define them in your vimrc.
+groups for functions (or namespaces) you can define them in your vimrc.
 
 For example:
 
 ```vim
-hi SLFunction  guifg=#afdfdf guibg=#2a2b2f ctermfg=152 ctermbg=235
-hi SLNamespace guifg=#a8a8a8 guibg=#2a2b2f ctermfg=248 ctermbg=235
+hi Function  guifg=#afdfdf ctermfg=152
+hi Namespace guifg=#a8a8a8 ctermfg=248
 ```
 
 Options
@@ -96,5 +96,5 @@ so this option is provided to fix these cases.
 ```vim
 'java':   ['javaParenT', 'javaParenT1', 'javaParentT2']
 'python': ['pythonFunction']
-'vim':    ['vimFuncBody', 'vimFunction', 'vimUserFunc', 'vimExecute']
+'vim':    ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute']
 ```

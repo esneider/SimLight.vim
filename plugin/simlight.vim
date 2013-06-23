@@ -66,7 +66,7 @@ endif
 let s:file_contained_in = {
 \   'java':   ['javaParenT', 'javaParenT1', 'javaParentT2'],
 \   'python': ['pythonFunction'],
-\   'vim':    ['vimFuncBody', 'vimFunction', 'vimUserFunc', 'vimExecute'],
+\   'vim':    ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
 \}
 
 
@@ -104,7 +104,7 @@ function! s:hlexists(hlgroup)
     redir => hlstatus
     execute "silent highlight" a:hlgroup
     redir END
-    return (hlstatus !~ "cleared")
+    return (hlstatus != "cleared")
 endfunction
 
 
@@ -143,7 +143,7 @@ function! s:simlight()
     for rule in items(s:file_rules)
         let contained_in = ''
         if has_key(s:file_contained_in, rule[0])
-            let contained_in = ' containedin='.join(s:file_contained_in[rule[0]],',')
+            let contained_in = join(insert(s:file_contained_in[rule[0]], ''), ' containedin=')
         endif
         execute 'autocmd Syntax '.rule[0].' call s:highlight(["'.join(rule[1], '","').'"], "'.contained_in.'")'
     endfor
