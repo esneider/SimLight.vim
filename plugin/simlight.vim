@@ -82,12 +82,12 @@ endif
 
 " Based on http://stackoverflow.com/a/773392/530680
 function! s:matchPrefix(name, prefix, contained_in)
-    execute 'syntax match SL'.a:name.' "'.a:prefix.'\s*\zs\w\+"'.a:contained_in
+    execute 'syntax match SL'.a:name.' "'.a:prefix.'\zs\w\+"'.a:contained_in
 endfunction
 
 
 function! s:matchPostfix(name, postfix, contained_in)
-    execute 'syntax match SL'.a:name.' "\w\+\ze\s*'.a:postfix.'"'.a:contained_in
+    execute 'syntax match SL'.a:name.' "\w\+\ze'.a:postfix.'"'.a:contained_in
 endfunction
 
 
@@ -102,9 +102,9 @@ function! s:hlexists(hlgroup)
         return 0
     endif
     redir => hlstatus
-    execute "silent highlight" a:hlgroup
+        execute "silent highlight" a:hlgroup
     redir END
-    return (hlstatus != "cleared")
+    return (hlstatus !~ "cleared")
 endfunction
 
 
