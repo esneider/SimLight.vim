@@ -28,7 +28,7 @@ endif
 
 let s:highlight_groups = {
 \    'Function':     ['SLFunction', 'CTagsFunction', 'Function'],
-\    'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type'],
+\    'Namespace':    ['SLNamespace', 'CTagsNamespace', 'Namespace', 'CTagsClass', 'Class', 'Type', 'Namespace'],
 \    'Array':        ['SLArray', 'Identifier'],
 \    'Member':       ['SLMember', 'CTagsMember', 'Identifier'],
 \    'PoiterMember': ['SLPointerMember', 'SLMember', 'CTagsMember', 'Identifier'],
@@ -150,5 +150,4 @@ function! s:simlight()
 endfunction
 
 
-call s:simlight()
-
+autocmd VimEnter,ColorScheme * call s:simlight()
