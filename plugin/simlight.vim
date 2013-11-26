@@ -10,7 +10,7 @@ let s:prefix_rules = {
 
 
 if exists('g:simlight_prefix_rules')
-    extend(s:prefix_rules, g:simlight_prefix_rules)
+    call extend(s:prefix_rules, g:simlight_prefix_rules)
 endif
 
 
@@ -22,7 +22,7 @@ let s:postfix_rules = {
 
 
 if exists('g:simlight_postfix_rules')
-    extend(s:postfix_rules, g:simlight_postfix_rules)
+    call extend(s:postfix_rules, g:simlight_postfix_rules)
 endif
 
 
@@ -40,7 +40,7 @@ if exists('g:simlight_highlight_groups')
         if has_key(s:highlight_groups, item[0])
             let item[1] += s:highlight_groups[item[0]]
         endif
-        s:highlight_groups[item[0]] = item[1]
+        let s:highlight_groups[item[0]] = item[1]
     endfor
 endif
 
@@ -59,7 +59,7 @@ let s:file_rules = {
 
 
 if exists('g:simlight_file_rules')
-    extend(s:file_rules, g:simlight_file_rules)
+    call extend(s:file_rules, g:simlight_file_rules)
 endif
 
 
@@ -71,8 +71,9 @@ let s:file_contained_in = {
 
 
 if exists('g:simlight_file_contained_in')
-    extend(s:file_contained_in, g:simlight_file_contained_in)
+    call extend(s:file_contained_in, g:simlight_file_contained_in)
 endif
+call map(s:file_contained_in, 'insert(v:val, "")')
 
 
 """"""""""""""""""""""""
@@ -143,7 +144,7 @@ function! s:simlight()
     for rule in items(s:file_rules)
         let contained_in = ''
         if has_key(s:file_contained_in, rule[0])
-            let contained_in = join(insert(s:file_contained_in[rule[0]], ''), ' containedin=')
+            let contained_in = join(s:file_contained_in[rule[0]], ' containedin=')
         endif
         execute 'autocmd Syntax '.rule[0].' call s:highlight(["'.join(rule[1], '","').'"], "'.contained_in.'")'
     endfor
@@ -151,3 +152,4 @@ endfunction
 
 
 autocmd VimEnter,ColorScheme * call s:simlight()
+
