@@ -20,19 +20,26 @@ call extend(s:tokens, get(g:, 'simlight_tokens', {}))
 let s:ft_rules = {
 \    'c':          ['BeforeLParen'],
 \    'cpp':        ['BeforeLParen', 'BeforeDoubleColon'],
+\    'cs':         ['BeforeLParen'],
+\    'd':          ['BeforeLParen'],
 \    'javascript': ['BeforeLParen'],
-\    'csharp':     ['BeforeLParen'],
 \    'java':       ['BeforeLParen'],
-\    'python':     ['BeforeLParen'],
+\    'lua':        ['BeforeLParen'],
 \    'matlab':     ['BeforeLParen'],
-\    'php':        ['BeforeLParen'],
+\    'objc':       ['BeforeLParen'],
+\    'perl':       ['BeforeLParen'],
+\    'python':     ['BeforeLParen'],
+\    'r':          ['BeforeLParen'],
+\    'ruby':       ['BeforeLParen'],
 \    'vim':        ['BeforeLParen'],
 \}
 
 call extend(s:ft_rules, get(g:, 'simlight_ft_rules', {}))
 
 let s:contained = {
+\   'd':      ['paramlist'],
 \   'java':   ['javaParenT', 'javaParenT1', 'javaParentT2'],
+\   'objc':   ['objcBlocks'],
 \   'python': ['pythonFunction'],
 \   'vim':    ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
 \}
