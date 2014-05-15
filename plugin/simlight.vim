@@ -83,7 +83,7 @@ function! s:simlight()
 
         let contained = [''] + get(s:contained, rule[0], [])
 
-        let cmd  = 'autocmd FileType,ColorScheme ' . rule[0] . ' '
+        let cmd  = 'autocmd FileType ' . rule[0] . ' '
         let cmd .=     'call s:highlight('
         let cmd .=         '["' . join(rule[1], '", "') . '"], '
         let cmd .=         '"' . join(contained, ' containedin=') . '"'
