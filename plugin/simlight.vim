@@ -2,7 +2,7 @@
 " Default options
 """""""""""""""""
 
-let s:tokens = {
+let s:markers = {
 \   'Dot'        : '.',
 \   'LRArrow'    : '->',
 \   'LParen'     : '(',
@@ -15,23 +15,23 @@ let s:tokens = {
 \   'Hash'       : '#',
 \}
 
-call extend(s:tokens, get(g:, 'simlight_tokens', {}))
+call extend(s:markers, get(g:, 'simlight_markers', {}))
 
 let s:ft_rules = {
-\    'c':          ['BeforeLParen'],
-\    'cpp':        ['BeforeLParen', 'BeforeDoubleColon'],
-\    'cs':         ['BeforeLParen'],
-\    'd':          ['BeforeLParen'],
-\    'javascript': ['BeforeLParen'],
-\    'java':       ['BeforeLParen'],
-\    'lua':        ['BeforeLParen'],
-\    'matlab':     ['BeforeLParen'],
-\    'objc':       ['BeforeLParen'],
-\    'perl':       ['BeforeLParen'],
-\    'python':     ['BeforeLParen'],
-\    'r':          ['BeforeLParen'],
-\    'ruby':       ['BeforeLParen'],
-\    'vim':        ['BeforeLParen'],
+\    'c':          {'BeforeLParen': 'Function'},
+\    'cpp':        {'BeforeLParen': 'Function', 'BeforeDoubleColon': 'Namespace'},
+\    'cs':         {'BeforeLParen': 'Function'},
+\    'd':          {'BeforeLParen': 'Function'},
+\    'javascript': {'BeforeLParen': 'Function'},
+\    'java':       {'BeforeLParen': 'Function'},
+\    'lua':        {'BeforeLParen': 'Function'},
+\    'matlab':     {'BeforeLParen': 'Function'},
+\    'objc':       {'BeforeLParen': 'Function'},
+\    'perl':       {'BeforeLParen': 'Function'},
+\    'python':     {'BeforeLParen': 'Function'},
+\    'r':          {'BeforeLParen': 'Function'},
+\    'ruby':       {'BeforeLParen': 'Function'},
+\    'vim':        {'BeforeLParen': 'Function'},
 \}
 
 call extend(s:ft_rules, get(g:, 'simlight_ft_rules', {}))
@@ -50,49 +50,54 @@ call extend(s:contained, get(g:, 'simlight_contained', {}))
 " Simple syntax matching
 """"""""""""""""""""""""
 
-function! s:highlight(rules, contained)
-
-    let dict = {
-    \   'b': ['\w\+\ze', ''],
-    \   'B': ['\w\+\ze', ''],
-    \   'a': ['', '\zs\w\+'],
-    \   'A': ['', '\zs\w\+'],
-    \}
-
-    for rule in a:rules
-
-        let str = matchlist(rule, '\v\c^(Before|After)(.*)')
-        if !empty(str)
-            let pat = dict[str[1][0]]
-
-            let cmd  = 'syntax match ' . rule . ' '
-            let cmd .=     '"\V' . pat[0] . s:tokens[str[2]] . pat[1] . '" '
-            let cmd .= a:contained
-
-            execute cmd
-        endif
-    endfor
-endf
+" We got clever here, and indexed the context by the first command letter:
+" either a(fter) or b(efore).
+let s:marker_context = {
+\   'a': ['', '\zs\w\+'],
+\   'A': ['', '\zs\w\+'],
+\   'b': ['\w\+\ze', ''],
+\   'B': ['\w\+\ze', ''],
+\}
 
 function! s:simlight()
 
-    augroup simlight
-    autocmd!
+    let file_type = expand('<amatch>')
 
-    for rule in items(s:ft_rules)
+    " We might be inside another highlight group, so add the necessary flags
+    let contained = [''] + get(s:contained, file_type, [])
+    let flags = join(contained, ' containedin=')
 
-        let contained = [''] + get(s:contained, rule[0], [])
+    " Cycle all the rules for this file_type
+    let rules = get(s:ft_rules, file_type, {})
 
-        let cmd  = 'autocmd FileType ' . rule[0] . ' '
-        let cmd .=     'call s:highlight('
-        let cmd .=         '["' . join(rule[1], '", "') . '"], '
-        let cmd .=         '"' . join(contained, ' containedin=') . '"'
-        let cmd .=     ')'
+    for [pattern, hi_group] in items(rules)
 
-        execute cmd
+        let tokens = matchlist(pattern, '\v\c^(After|Before)(.*)')
+        let marker = get(s:markers, get(tokens, 2, ''), '')
+
+        if empty(marker)
+            continue
+        endif
+
+        let rule_name = file_type . pattern
+
+        " The match string is the marker between its corresponding context
+        let match = '\V' . join(s:marker_context[pattern[0]], marker)
+
+        execute 'syntax match ' . rule_name . ' "' . match . '" ' . flags
+        execute 'highlight default link ' . rule_name . ' ' . hi_group
     endfor
-
-    augroup END
 endf
 
-call s:simlight()
+"""""""""""""""""""
+" FileType autocmds
+"""""""""""""""""""
+
+augroup simlight
+autocmd!
+
+for file_type in keys(s:ft_rules)
+    execute 'autocmd FileType ' . file_type . ' call s:simlight()'
+endfor
+
+augroup END
