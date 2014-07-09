@@ -37,11 +37,12 @@ let s:ft_rules = {
 call extend(s:ft_rules, get(g:, 'simlight_ft_rules', {}))
 
 let s:contained = {
-\   'd':      ['paramlist'],
-\   'java':   ['javaParenT', 'javaParenT1', 'javaParentT2'],
-\   'objc':   ['objcBlocks'],
-\   'python': ['pythonFunction'],
-\   'vim':    ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
+\   'd':          ['paramlist'],
+\   'java':       ['javaParenT', 'javaParenT1', 'javaParentT2'],
+\   'javascript': ['jsFuncCall'],
+\   'objc':       ['objcBlocks'],
+\   'python':     ['pythonFunction'],
+\   'vim':        ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
 \}
 
 call extend(s:contained, get(g:, 'simlight_contained', {}))
