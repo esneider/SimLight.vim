@@ -62,14 +62,16 @@ let s:marker_context = {
 
 function! s:simlight()
 
-    let file_type = expand('<amatch>')
+    if !has_key(s:ft_rules, &filetype)
+        return
+    endif
 
     " We might be inside another highlight group, so add the necessary flags
-    let contained = [''] + get(s:contained, file_type, [])
+    let contained = [''] + get(s:contained, &filetype, [])
     let flags = join(contained, ' containedin=')
 
-    " Cycle all the rules for this file_type
-    let rules = get(s:ft_rules, file_type, {})
+    " Cycle all the rules for this &filetype
+    let rules = get(s:ft_rules, &filetype, {})
 
     for [pattern, hi_group] in items(rules)
 
@@ -80,7 +82,7 @@ function! s:simlight()
             continue
         endif
 
-        let rule_name = file_type . pattern
+        let rule_name = &filetype . pattern
 
         " The match string is the marker between its corresponding context
         let match = '\V' . join(s:marker_context[pattern[0]], marker)
@@ -95,10 +97,6 @@ endf
 """""""""""""""""""
 
 augroup simlight
-autocmd!
-
-for file_type in keys(s:ft_rules)
-    execute 'autocmd FileType ' . file_type . ' call s:simlight()'
-endfor
-
+    autocmd!
+    autocmd FileType * call s:simlight()
 augroup END
