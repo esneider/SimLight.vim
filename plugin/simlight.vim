@@ -42,7 +42,7 @@ let s:contained = {
 \   'javascript': ['jsFuncCall'],
 \   'objc':       ['objcBlocks'],
 \   'python':     ['pythonFunction'],
-\   'vim':        ['vimFuncBody', 'vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
+\   'vim':        ['vimFunction', 'vimFuncName', 'vimUserFunc', 'vimExecute'],
 \}
 
 call extend(s:contained, get(g:, 'simlight_contained', {}))
@@ -51,13 +51,9 @@ call extend(s:contained, get(g:, 'simlight_contained', {}))
 " Simple syntax matching
 """"""""""""""""""""""""
 
-" We got clever here, and indexed the context by the first command letter:
-" either a(fter) or b(efore).
 let s:marker_context = {
-\   'a': ['', '\zs\w\+'],
-\   'A': ['', '\zs\w\+'],
-\   'b': ['\w\+\ze', ''],
-\   'B': ['\w\+\ze', ''],
+\   'after':  ['', '\zs\w\+'],
+\   'before': ['\w\+\ze', ''],
 \}
 
 function! s:simlight()
@@ -84,17 +80,13 @@ function! s:simlight()
 
         let rule_name = &filetype . pattern
 
-        " The match string is the marker between its corresponding context
-        let match = '\V' . join(s:marker_context[pattern[0]], marker)
+        " The match string is the marker inside its corresponding context
+        let match = '\V' . join(s:marker_context[tolower(tokens[1])], marker)
 
         execute 'syntax match ' . rule_name . ' "' . match . '" ' . flags
         execute 'highlight default link ' . rule_name . ' ' . hi_group
     endfor
 endf
-
-"""""""""""""""""""
-" FileType autocmds
-"""""""""""""""""""
 
 augroup simlight
     autocmd!
